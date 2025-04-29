@@ -3,98 +3,193 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Invoice Generator</title>
+  <title>Invoice Kekinian</title>
   <style>
+    :root {
+      --primary: #6366f1;
+      --background: #f9fafb;
+      --card: #ffffff;
+      --text: #1f2937;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f3f4f6;
       margin: 0;
-      padding: 0;
+      background: var(--background);
+      color: var(--text);
+      padding: 20px;
     }
 
     .container {
-      max-width: 600px;
-      margin: 40px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      max-width: 720px;
+      margin: auto;
+      background: var(--card);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.07);
     }
 
     h1 {
       text-align: center;
-      color: #111827;
+      color: var(--primary);
+      margin-bottom: 25px;
+      font-size: 1.8rem;
     }
 
-    input, select, button {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
+    #logo {
+      display: block;
+      max-width: 150px;
+      margin: 0 auto 20px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 16px;
+      margin-bottom: 20px;
+    }
+
+    form input, form select, form textarea {
+      padding: 12px 16px;
+      border-radius: 10px;
       border: 1px solid #d1d5db;
       font-size: 1rem;
+      background-color: #f9fafb;
+      color: #111827;
+      transition: border 0.2s ease;
     }
 
-    button {
-      background-color: #3b82f6;
+    form input::placeholder,
+    form textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    form input:focus, form select:focus, form textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+      background-color: #fff;
+    }
+
+    form textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    form button {
+      grid-column: span 2;
+      padding: 14px;
+      background: var(--primary);
       color: white;
-      cursor: pointer;
+      font-size: 1rem;
       border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: 600;
     }
 
-    button:hover {
-      background-color: #2563eb;
+    form button:hover {
+      background: #4f46e5;
     }
 
     .invoice {
-      margin-top: 30px;
+      margin-top: 40px;
       display: none;
     }
 
     .invoice-box {
       border: 1px solid #e5e7eb;
-      padding: 20px;
-      border-radius: 12px;
+      padding: 24px;
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .invoice-box h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 20px;
     }
 
     .invoice-item {
       margin: 10px 0;
+      font-size: 1.05rem;
     }
 
-    .text-bold {
+    .invoice-item span {
+      display: inline-block;
+      min-width: 140px;
       font-weight: 600;
+    }
+
+    .note-box {
+      margin-top: 20px;
+      padding: 12px;
+      background: #f3f4f6;
+      border-left: 4px solid var(--primary);
+      border-radius: 10px;
+      font-style: italic;
+      color: #374151;
     }
 
     .download-btn {
       margin-top: 20px;
+      background: #10b981;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .download-btn:hover {
+      background: #059669;
+    }
+
+    @media (max-width: 600px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+      form button {
+        grid-column: span 1;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Buat Invoice</h1>
+    <img src="logo.png" alt="Logo" id="logo" />
     <form id="invoiceForm">
       <input type="text" id="nama" placeholder="Nama Pembeli" required />
-      <input type="text" id="produk" placeholder="Nama Produk" required />
+      <input type="text" id="produk" placeholder="Produk" required />
       <input type="text" id="durasi" placeholder="Durasi (contoh: 1 Bulan)" required />
       <select id="payment" required>
-        <option value="">-- Pilih Metode Pembayaran --</option>
+        <option value="">Pilih Pembayaran</option>
         <option value="Dana">Dana</option>
         <option value="Gopay">Gopay</option>
         <option value="QRIS">QRIS</option>
       </select>
       <input type="number" id="harga" placeholder="Harga (Rp)" required />
+      <textarea id="catatan" placeholder="Catatan (opsional)"></textarea>
       <button type="submit">Buat Invoice</button>
     </form>
 
     <div class="invoice" id="invoiceArea">
       <div class="invoice-box" id="invoiceBox">
-        <h2 style="text-align: center;">INVOICE</h2>
-        <div class="invoice-item"><span class="text-bold">Nama:</span> <span id="outNama"></span></div>
-        <div class="invoice-item"><span class="text-bold">Produk:</span> <span id="outProduk"></span></div>
-        <div class="invoice-item"><span class="text-bold">Durasi:</span> <span id="outDurasi"></span></div>
-        <div class="invoice-item"><span class="text-bold">Metode Pembayaran:</span> <span id="outPayment"></span></div>
-        <div class="invoice-item"><span class="text-bold">Harga:</span> Rp <span id="outHarga"></span></div>
+        <h2>INVOICE</h2>
+        <div class="invoice-item"><span>Tanggal:</span> <span id="outTanggal"></span></div>
+        <div class="invoice-item"><span>Nama:</span> <span id="outNama"></span></div>
+        <div class="invoice-item"><span>Produk:</span> <span id="outProduk"></span></div>
+        <div class="invoice-item"><span>Durasi:</span> <span id="outDurasi"></span></div>
+        <div class="invoice-item"><span>Pembayaran:</span> <span id="outPayment"></span></div>
+        <div class="invoice-item"><span>Harga:</span> <span>Rp <span id="outHarga"></span></span></div>
+        <div class="note-box" id="outNote" style="display:none;"></div>
       </div>
       <button class="download-btn" onclick="downloadInvoice()">Simpan ke Galeri</button>
     </div>
@@ -105,13 +200,29 @@
     document.getElementById("invoiceForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
+      const note = document.getElementById("catatan").value.trim();
+
+      const currentDate = new Date();
+      const formattedDate = currentDate.getDate().toString().padStart(2, '0') + '/' +
+                            (currentDate.getMonth() + 1).toString().padStart(2, '0') + '/' +
+                            currentDate.getFullYear();
+
+      document.getElementById("outTanggal").textContent = formattedDate;
       document.getElementById("outNama").textContent = document.getElementById("nama").value;
       document.getElementById("outProduk").textContent = document.getElementById("produk").value;
       document.getElementById("outDurasi").textContent = document.getElementById("durasi").value;
       document.getElementById("outPayment").textContent = document.getElementById("payment").value;
       document.getElementById("outHarga").textContent = parseInt(document.getElementById("harga").value).toLocaleString("id-ID");
 
+      if (note !== "") {
+        document.getElementById("outNote").textContent = note;
+        document.getElementById("outNote").style.display = "block";
+      } else {
+        document.getElementById("outNote").style.display = "none";
+      }
+
       document.getElementById("invoiceArea").style.display = "block";
+      document.getElementById("invoiceArea").scrollIntoView({ behavior: "smooth" });
     });
 
     function downloadInvoice() {
