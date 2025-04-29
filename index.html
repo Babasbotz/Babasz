@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Invoice Kekinian</title>
   <style>
     :root {
-      --primary: #6366f1;
+      --primary: #007BFF;
       --background: #f9fafb;
       --card: #ffffff;
       --text: #1f2937;
@@ -17,7 +18,7 @@
     }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'inter', sans-serif;
       margin: 0;
       background: var(--background);
       color: var(--text);
@@ -86,7 +87,7 @@
     }
 
     form button:hover {
-      background: #4f46e5;
+      background: #007BFF;
     }
 
     .invoice {
@@ -106,15 +107,15 @@
       color: var(--primary);
       margin-bottom: 20px;
     }
-
+    
     #logo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 5px solid var(--primary);
-      margin-bottom: 20px;
-    }
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--primary);
+  margin: 0 auto 20px auto;
+}
 
     .invoice-item {
       margin: 10px 0;
@@ -154,6 +155,19 @@
     .download-btn:hover {
       background: #059669;
     }
+
+      .footer {
+  text-align: center;
+  margin-top: 40px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #1f2937; /* warna teks utama */
+}
+
+.footer .brand {
+  color: #3b82f6; /* warna biru untuk "ヮBabas" */
+}
+    
   </style>
 </head>
 <body>
@@ -179,11 +193,11 @@
       <div class="invoice-box" id="invoiceBox">
         <img id="logo" src="" alt="Logo" style="display:none;" />
         <h2>INVOICE</h2>
-        <div class="invoice-item"><span>Tanggal:</span> <span id="outTanggal"></span></div>
-        <div class="invoice-item"><span>Nama:</span> <span id="outNama"></span></div>
-        <div class="invoice-item"><span>Produk:</span> <span id="outProduk"></span></div>
-        <div class="invoice-item"><span>Durasi:</span> <span id="outDurasi"></span></div>
-        <div class="invoice-item"><span>Pembayaran:</span> <span id="outPayment"></span></div>
+        <div class="invoice-item"><span>Tanggal:</span> <div id="outTanggal"></div></div>
+        <div class="invoice-item"><span>Nama:</span> <div id="outNama"></div></div>
+        <div class="invoice-item"><span>Produk:</span> <div id="outProduk"></div></div>
+        <div class="invoice-item"><span>Durasi:</span> <div id="outDurasi"></div></div>
+        <div class="invoice-item"><span>Pembayaran:</span> <div id="outPayment"></div></div>
         <div class="invoice-item"><span>Harga:</span> <span>Rp <span id="outHarga"></span></span></div>
         <div class="note-box" id="outNote" style="display:none;"></div>
       </div>
@@ -239,5 +253,8 @@
       });
     }
   </script>
+  <footer class="footer">
+  <span class="brand">ヮBabas</span> © All Rights Reserved
+  </footer>
 </body>
 </html>
