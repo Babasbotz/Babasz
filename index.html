@@ -40,10 +40,19 @@
       font-size: 1.8rem;
     }
 
+    #logoContainer {
+      display: none;
+      text-align: center;
+    }
+
     #logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
       display: block;
-      max-width: 150px;
       margin: 0 auto 20px;
+      border: 5px solid var(--primary);
     }
 
     form {
@@ -164,8 +173,11 @@
 <body>
   <div class="container">
     <h1>Buat Invoice</h1>
-    <img src="logo.png" alt="Logo" id="logo" />
+    <div id="logoContainer">
+      <img id="logo" src="" alt="Logo" />
+    </div>
     <form id="invoiceForm">
+      <input type="file" id="logoUpload" accept="image/*" onchange="loadLogo(event)" />
       <input type="text" id="nama" placeholder="Nama Pembeli" required />
       <input type="text" id="produk" placeholder="Produk" required />
       <input type="text" id="durasi" placeholder="Durasi (contoh: 1 Bulan)" required />
@@ -197,6 +209,18 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
+    function loadLogo(event) {
+      const logoImage = document.getElementById('logo');
+      const reader = new FileReader();
+      
+      reader.onload = function() {
+        logoImage.src = reader.result;
+        document.getElementById("logoContainer").style.display = "block";
+      }
+      
+      reader.readAsDataURL(event.target.files[0]);
+    }
+
     document.getElementById("invoiceForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
